@@ -2,7 +2,7 @@
 (function(win, doc) {
 
 win.iepp = {
-	_elements: 'abbr|article|aside|audio|canvas|datagrid|datalist|details|dialog|figure|figcaption|footer|header|hgroup|mark|menu|meter|nav|output|progress|section|summary|time|video',
+	_elements: 'abbr|article|aside|audio|canvas|command|datalist|details|dialog|figure|figcaption|footer|header|hgroup|keygen|mark|meter|nav|output|progress|section|source|summary|time|video',
 
 	_protect: [],
 
