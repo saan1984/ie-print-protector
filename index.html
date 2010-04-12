@@ -1,0 +1,218 @@
+<!DOCTYPE HTML>
+
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+
+		<title>IE Print Protector - ieCSS</title>
+
+		<meta content="en" name="language" />
+		<meta content="index, follow" name="robots" />
+		<meta content="IE Print Protector is a script that allows you to print HTML5 pages in Internet Explorer." name="description" />
+
+		<meta content="internet explorer ie css html5 print javascript fix" name="keywords" />
+		<meta content="Website Author" name="author" />
+
+		<link href="../favicon.ico" rel="shortcut icon" />
+		<link href="css/main.css" media="all" rel="stylesheet" type="text/css" />
+
+		<script src="javascript/iepp.1-3-0.js"></script>
+		<script src="javascript/main.js"></script>
+	</head>
+	<body>
+
+		<div id="main-document" role="document">
+			<a class="obscured" href="#main-content" id="skip-to-main-content">Skip to main content</a>
+
+			<header id="banner" role="banner">
+				<hgroup id="heading">
+					<h1 class="obscured" id="site-title" itemscope itemtype="http://microformats.org/profile/hcard" itemref="content-info">
+						<a itemprop="url" href="http://www.iecss.com/"><img itemprop="fn org logo" alt="ieCSS" src="../images/logo.png" /></a>
+					</h1>
+
+					<h2 id="page-title" itemscope itemtype="http://microformats.org/profile/hcard" itemref="content-info">
+						<a itemprop="url" href="http://www.iecss.com/print-protector/"><img itemprop="fn org logo" alt="IE Print Protector" src="images/logo.png" /></a>
+					</h2>
+				</hgroup>
+
+				<nav id="navigation">
+					<h1 class="obscured">
+						<span>Navigation</span>
+					</h1>
+
+					<ul class="sitemap clear-after">
+						<li>
+							<a href="#about"><span>IE Print Protector</span></a>
+						</li>
+						<li>
+							<a href="#ie-print-bug"><span>Printing HTML5 in Internet Explorer</span></a>
+						</li>
+						<li>
+							<a href="#how-it-works"><span>How IE Print Protector works</span></a>
+						</li>
+						<li>
+							<a href="#in-action"><span>IE Print Protector in action</span></a>
+						</li>
+						<li>
+							<a href="#download"><span>Download IE Print Protector</span></a>
+						</li>
+					</ul>
+				</nav>
+			</header>
+
+			<div id="content">
+				<div id="main-content" role="main">
+					<article id="about">
+						<h1>
+							IE Print Protector
+						</h1>
+
+						<p>
+							<strong>IE Print Protector</strong> is a piece of javascript that allows you to print HTML5 pages in Internet Explorer.
+						</p>
+
+						<p>
+							<strong>IE Print Protector</strong> helps <abbr title="Internet Explorer">IE</abbr> render HTML5 elements correctly, both on screen and in print.
+						</p>
+					</article>
+
+					<article id="ie-print-bug">
+						<h1>
+							Printing HTML5 in Internet Explorer
+						</h1>
+
+						<p>
+							Internet Explorer 6, 7, and 8 do not recognize new HTML5 elements.
+							<abbr title="Internet Explorer">IE</abbr> treats unknown element start <code>&lt;section&gt;</code> and end <code>&lt;/section&gt;</code> tags as void elements.
+							This means unknown elements no longer wrap their contents, making them impossible to style and spilling their contents into the DOM.
+						</p>
+
+<p>
+	In this example we have an <var>article</var> element wrapping a <var>heading</var> and <var>paragraph</var> with some text.
+</p>
+
+<pre>
+&lt;article&gt;
+	&lt;h1&gt;
+		Lorem ipsum
+	&lt;/h1&gt;
+	&lt;p&gt;
+		Dolor sit amet, consectetur adipisicing elit.
+	&lt;/p&gt;
+&lt;/article&gt;
+</pre>
+
+<p>
+	Since Internet Explorer voids the <var>article</var> element, the <var>heading</var> and <var>paragraph</var> are pushed out.
+</p>
+
+<pre>
+&lt;article /&gt;
+&lt;h1&gt;
+	Lorem ipsum
+&lt;/h1&gt;
+&lt;p&gt;
+	Dolor sit amet, consectetur adipisicing elit.
+&lt;/p&gt;
+</pre>
+					</article>
+
+					<article id="how-it-works">
+						<h1>
+							How <strong>IE Print Protector</strong> works
+						</h1>
+						<p>
+							To display elements on screen, <strong>IE Print Protector</strong> uses a <strong>shim</strong>, a piece of javascript which forces support for HTML5 elements in Internet Explorer.
+						</p>
+						<p>
+							To display elements correctly in print, <strong>IE Print Protector</strong> temporarily replaces HTML5 elements with supported fallback elements (like <var>div</var> and <var>span</var>) when you print.
+							<strong>IE Print Protector</strong> also creates a special stylesheet for these elements based on your existing styles; this means you can safely style HTML5 elements by element name in <var>link</var>s, <var>style</var>s, and even imports.
+							Immediately after, <strong>IE Print Protector</strong> restores the original HTML5 element to the page, right where you left it.
+							Any references to those elements and any events on those elements will remain intact.
+						</p>
+					</article>
+
+					<article id="in-action">
+						<h1>
+							<strong>IE Print Protector</strong> in action
+						</h1>
+						<p>
+							Review <a href="example_print.html">an example of a page <em>not running</em> <strong>IE Print Protector</strong></a>, but instead running a popular <a href="http://code.google.com/p/html5shiv/" rel="external">HTML5 IE enabled script</a>.
+							In Internet Explorer, use the <strong>File</strong> menu to select <strong>Print Preview</strong> and see how the styling for all HTML5 elements is missing.
+							This is the default behavior for Internet Explorer 6, 7, and 8.
+						</p>
+						<p>
+							Review <a href="example_print_iepp.html">an example of a page <em>running</em> <strong>IE Print Protector</strong></a>.
+							In Internet Explorer, use the <strong>File</strong> menu to select <strong>Print Preview</strong> and see how the styling for all HTML5 elements is working.
+							Afterwards, you'll see that a javascript mouseover event is still working.
+						</p>
+						<div class="clear-after" id="iepp_figure">
+							<figure>
+								<img alt="What printing a page without IE Print Protector looks like." src="images/example_print.png" />
+	
+								<figcaption>
+									Before IE Print Protector
+								</figcaption>
+							</figure>
+							<figure>
+								<img alt="What printing a page with IE Print Protector looks like." src="images/example_print_iepp.png" />
+	
+								<figcaption>
+									After IE Print Protector
+								</figcaption>
+							</figure>
+						</div>
+					</article>
+
+					<article id="download">
+						<h1>
+							Download <strong>IE Print Protector</strong>
+						</h1>
+						<dl>
+							<dt>
+								IE Print Protector v1.3.0
+							</dt>
+							<dd>
+								<a href="javascript/iepp.1-3-0.min.js">Minified JS <small>(1.85KB)</small></a>
+							</dd>
+							<dd>
+								<a href="javascript/iepp.1-3-0.js">Uncompressed JS <small>(3.19KB)</small></a>
+							</dd>
+						</dl>
+					</article>
+				</div>
+
+			</div>
+
+			<footer id="content-info" role="contentinfo">
+				<address>
+					<a itemprop="email" href="mailto:jonathan.neal@liferay.com">jonathan.neal@liferay.com</a><br />
+					<a href="http://twitter.com/jon_neal">http://twitter.com/jon_neal</a><br />
+					<a href="http://www.liferay.com/web/jonathan.neal/blog/">http://www.liferay.com/web/jonathan.neal/blog/</a>
+				</address>
+
+				<ul id="validations">
+					<li>					
+						<a href="http://gsnedders.html5.org/outliner/process.py?url=http://www.iecss.com/print-protector/" rel="external">Check Outline</a>
+					</li>
+					<li>
+						<a href="http://html5.validator.nu/?doc=http://www.iecss.com/print-protector/" rel="external">Check HTML5</a>
+					</li>
+					<li>
+						<a href="http://wave.webaim.org/report?url=http://www.iecss.com/print-protector/" rel="external">Check WAVE</a>
+					</li>
+					<li>
+						<a href="http://www.section508.info/check_this.cfm?s508=1&amp;CheckURL=0&amp;URLtest=http://www.iecss.com/print-protector/" rel="external">Check Section 508</a>
+					</li>
+					<li>
+						<a href="http://www.delorie.com/web/lynxview" rel="external">Visit Lynx</a>
+					</li>
+					<li>
+						<a href="http://www.totalvalidator.com/validator/Validator" rel="external">Visit Total Validator</a>
+					</li>
+				</ul>
+			</footer>
+		</div>
+
+	</body>
+</html>
