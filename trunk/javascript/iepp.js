@@ -1,133 +1,90 @@
 /*@cc_on@if(@_jscript_version<9)
-(function(win, doc) {
+(function () {
 
-win.iepp = {
-	_elements: 'abbr|article|aside|audio|canvas|command|datalist|details|figure|figcaption|footer|header|hgroup|keygen|mark|meter|nav|output|progress|section|source|summary|time|video',
-
-	_protect: [],
-
-	_parseSheets: function (stylesheets) {
-		var root = win.iepp,
-			imports,
-			rules,
-			selectors,
-			selectorsMatch = new RegExp('\\b(' + root._elements + ')\\b', 'gi'),
-			selectorsReplace = function (m) {
+var win = window,
+	doc = document,
+	doc_frag = doc.createDocumentFragment(),
+	html5_stylesheet,
+	elementsArray = 'abbr article aside audio canvas command datalist details figure figcaption footer header hgroup keygen mark meter nav output progress section source summary time video'.split(' '),
+	elementsCache = [],
+	parse_style_sheet_list = function (styleSheetList) {
+		var cssRuleList,
+			selectorText,
+			selectorTextMatch = new RegExp('\\b(' + elementsArray.join('|') + ')\\b', 'gi'),
+			selectorTextReplace = function (m) {
 				return '.iepp_' + m;
 			},
-			declarationBlock,
 			a = -1,
 			b;
 
-		while (++a < stylesheets.length) {
-			imports = stylesheets[a].imports;
-			rules = stylesheets[a].rules;
+		while (++a < styleSheetList.length) {
 			b = -1;
 
-			if (imports.length) {
-				root._parseSheets(imports);
-			}
+			parse_style_sheet_list(styleSheetList[a].imports);
 
-			while (++b < rules.length) {
-				selectors = rules[b].selectorText;
-				declarationBlock = rules[b].style.cssText;
+			cssRuleList = styleSheetList[a].rules;
 
-				if (selectors.match(selectorsMatch)) {
-					root._stylesheet.styleSheet.addRule(selectors.replace(selectorsMatch, selectorsReplace), declarationBlock);
+			while (++b < cssRuleList.length) {
+				selectorText = cssRuleList[b].selectorText;
+
+				if (selectorText.match(selectorTextMatch)) {
+					html5_stylesheet.styleSheet.addRule(selectorText.replace(selectorTextMatch, selectorTextReplace), cssRuleList[b].style.cssText);
 				}
 			}
 		}
 	},
+	on_before_print = function () {
+		var head = doc.documentElement.firstChild,
+			element,
+			elements = doc.getElementsByTagName('*'),
+			elementCache,
+			elementName,
+			elementMatch = new RegExp('^' + elementsArray.join('|') + '$', 'i'),
+			elementReplace,
+			elementReplaced,
+			a = -1;
 
-	shim: function () {
-		var root = win.iepp,
-			els = root._elements.split('|'),
-			fragment = doc.createDocumentFragment(),
-			div = doc.createElement('div'),
-			i = -1;
+		while (++a < elements.length) {
+			if ((element = elements[a]) && (elementName = element.nodeName.match(elementMatch))) {
+				elementReplace = new RegExp('^\\s*<' + elementName + '(.*)\\/' + elementName + '>\\s*$', 'i');
 
-		fragment.appendChild(div);
+				doc_frag.innerHTML = element.outerHTML.replace(/\r|\n/g, ' ').replace(elementReplace, (element.currentStyle.display == 'block') ? '<div$1/div>' : '<span$1/span>');
 
-		while (++i < els.length) {
-			doc.createElement(els[i]);
-			fragment.createElement(els[i]);
-		}
+				elementReplaced = doc_frag.childNodes[0];
+				elementReplaced.className += ' iepp_' + elementName;
 
-		root._fragment = div;
+				elementCache = elementsCache[elementsCache.length] = [element, elementReplaced];
 
-		win.attachEvent('onbeforeprint', root.addSafeHTML);
-		win.attachEvent('onafterprint', root.removeSafeHTML);
-	},
-
-	addSafeCSS: function () {
-		var root = win.iepp,
-			head = doc.documentElement.firstChild,
-			safeStylesheet = doc.createElement('style'),
-			stylesheets = doc.styleSheets;
-
-		head.insertBefore(safeStylesheet, head.firstChild);
-
-		root._stylesheet = safeStylesheet;
-
-		root._parseSheets(stylesheets);
-	},
-
-	removeSafeCSS: function () {
-		doc.documentElement.firstChild.removeChild(win.iepp._stylesheet);
-	},
-
-	addSafeHTML: function () {
-		var root = win.iepp,
-			els = doc.getElementsByTagName('*'),
-			node_match = new RegExp('^' + root._elements + '$', 'i'),
-			node_name,
-			node_replace,
-			node_safe,
-			safe_element,
-			protect,
-			i = -1;
-
-		root.addSafeCSS();
-
-		while (++i < els.length) {
-			node_name = els[i].nodeName.match(node_match);
-
-			if (node_name) {
-				node_replace = new RegExp('^\\s*<' + node_name + '(.*)\\/' + node_name + '>\\s*$', 'i');
-				node_safe = (els[i].currentStyle.display == 'block') ? 'div' : 'span'; 
-
-				root._fragment.innerHTML = els[i].outerHTML.replace(/\r|\n/g, ' ').replace(node_replace, '<' + node_safe + '$1/' + node_safe + '>');
-
-				safe_element = root._fragment.childNodes[0];
-
-				safe_element.className += ' iepp_' + node_name;
-
-				protect = root._protect[root._protect.length] = {
-					before: els[i],
-					after: root._fragment.childNodes[0]
-				};
-
-				els[i].parentNode.replaceChild(protect.after, protect.before);
+				element.parentNode.replaceChild(elementCache[1], elementCache[0]);
 			}
 		}
+
+		head.insertBefore((html5_stylesheet = doc.createElement('style')), head.firstChild);
+
+		parse_style_sheet_list(doc.styleSheets);
 	},
+	on_after_print = function () {
+		var a = -1;
 
-	removeSafeHTML: function () {
-		var root = win.iepp,
-			els = root._protect,
-			i = -1;
-
-		root.removeSafeCSS();
-
-		while (++i < els.length) {
-			els[i].after.parentNode.replaceChild(els[i].before, els[i].after);
+		while (++a < elementsCache.length) {
+			elementsCache[a][1].parentNode.replaceChild(elementsCache[a][0], elementsCache[a][1]);
 		}
 
-		root._protect = [];
-	}
-};
+		doc.documentElement.firstChild.removeChild(html5_stylesheet);
 
-win.iepp.shim();
+		elementsCache = [];
+	},
+	a = -1;
 
-})(this, document);
+while (++a < elementsArray.length) {
+	doc.createElement(elementsArray[a]);
+	doc_frag.createElement(elementsArray[a]);
+}
+
+doc_frag = doc_frag.appendChild(doc.createElement('div'));
+
+win.attachEvent('onbeforeprint', on_before_print);
+win.attachEvent('onafterprint', on_after_print);
+
+}());
 @end@*/
