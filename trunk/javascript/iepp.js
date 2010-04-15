@@ -59,9 +59,11 @@ var win = window,
 			}
 		}
 
-		head.insertBefore((html5_stylesheet = doc.createElement('style')), head.firstChild);
+		doc_frag.appendChild((html5_stylesheet = doc.createElement('style')));
 
 		parse_style_sheet_list(doc.styleSheets);
+
+		head.insertBefore(html5_stylesheet, head.firstChild);
 	},
 	on_after_print = function () {
 		var a = -1;
