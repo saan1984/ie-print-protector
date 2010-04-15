@@ -16,7 +16,7 @@
 		<link href="../favicon.ico" rel="shortcut icon" />
 		<link href="css/main.css" media="all" rel="stylesheet" type="text/css" />
 
-		<script src="javascript/iepp.1-4-0.js"></script>
+		<script src="javascript/iepp.1-5-0.js"></script>
 		<script src="javascript/main.js"></script>
 	</head>
 	<body>
@@ -126,7 +126,7 @@
 						</p>
 						<p>
 							To display elements correctly in print, <strong>IE Print Protector</strong> temporarily replaces HTML5 elements with supported fallback elements (like <var>div</var> and <var>span</var>) when you print.
-							<strong>IE Print Protector</strong> also creates a special stylesheet for these elements based on your existing styles; this means you can safely style HTML5 elements by element name in <var>link</var>s, <var>style</var>s, and even imports.
+							<strong>IE Print Protector</strong> also creates a special stylesheet for these elements based on your existing styles; this means you can safely style HTML5 elements by element name in <var>link</var>s, <var>style</var>s, <var>@import</var>s and <var>@media</var>.
 							Immediately after, <strong>IE Print Protector</strong> restores the original HTML5 element to the page, right where you left it.
 							Any references to those elements and any events on those elements will remain intact.
 						</p>
@@ -170,19 +170,36 @@
 						</h1>
 						<dl>
 							<dt>
-								IE Print Protector v1.4.0
+								IE Print Protector v1.5.0
 							</dt>
 							<dd>
-								<a href="javascript/iepp.1-4-0.min.js">Minified JS <small>(1.36KB) (889 bytes gzipped)</small></a>
+								<a href="javascript/iepp.1-5-0.min.js">Minified JS <small>(1.27KB) (791 bytes gzipped)</small></a>
 							</dd>
 							<dd>
-								<a href="javascript/iepp.1-4-0.js">Uncompressed JS <small>(2.75KB)</small></a>
+								<a href="javascript/iepp.1-5-0.js">Uncompressed JS <small>(2.79KB)</small></a>
 							</dd>
 						</dl>
+						<p>
+							<small>IE Print Protector is licensed <a href="http://www.opensource.org/licenses/mit-license.php">MIT</a> for your comfort. =)</small>
+						</p>
 						<article style="font: 70% monospace;">
 							<h2>
 								Changelog
 							</h2>
+							<dl>
+								<dt>
+									v1.5.0
+								</dt>
+								<dd>
+									Optimized variables and functions
+								</dd>
+								<dd>
+									Rewrote stylesheet parser to support @media
+								</dd>
+								<dd>
+									Added about info to top of files
+								</dd>
+							</dl>
 							<dl>
 								<dt>
 									v1.4.0
