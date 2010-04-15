@@ -4,7 +4,7 @@
 
 var documentElement = document.documentElement,
 	documentFragment = document.createDocumentFragment(),
-	html5_stylesheet,
+	html5_stylesheet = {},
 	html5_elements = 'abbr|article|aside|audio|canvas|command|datalist|details|figure|figcaption|footer|header|hgroup|keygen|mark|meter|nav|output|progress|section|source|summary|time|video',
 	html5_elements_array = html5_elements.split('|'),
 	elementsCache = [],
@@ -12,18 +12,37 @@ var documentElement = document.documentElement,
 	firstChild = 'firstChild',
 	createElement = 'createElement';
 
-function parse_style_sheet_list (styleSheetList) {
+function append_stylesheet (media, cssText) {
+	if (html5_stylesheet[media]) {
+		html5_stylesheet[media].styleSheet.cssText += cssText;
+	}
+	else {
+		var head = documentElement[firstChild],
+			style = document[createElement]('style');
+
+		style.media = media;
+		head.insertBefore(style, head[firstChild]);
+		html5_stylesheet[media] = style;
+		append_stylesheet(media, cssText);
+	}
+}
+
+function parse_style_sheet_list (styleSheetList, media) {
 	var cssRuleList,
 		selectorText,
 		selectorTextMatch = new RegExp('\\b(' + html5_elements + ')\\b(?!.*[;}])', 'gi'),
 		selectorTextReplace = function (m) {
 			return '.iepp_' + m;
 		},
-		a = -1;
+		a = -1,
+		media_stylesheet;
 
 	while (++a < styleSheetList.length) {
-		parse_style_sheet_list(styleSheetList[a].imports);
-		html5_stylesheet.styleSheet.cssText += styleSheetList[a].cssText.replace(selectorTextMatch, selectorTextReplace);
+		media = styleSheetList[a].media || media;
+
+		parse_style_sheet_list(styleSheetList[a].imports, media);
+
+		append_stylesheet(media, styleSheetList[a].cssText.replace(selectorTextMatch, selectorTextReplace));
 	}
 }
 
@@ -53,22 +72,22 @@ function on_before_print () {
 		}
 	}
 
-	documentFragment.appendChild((html5_stylesheet = document[createElement]('style')));
-
-	parse_style_sheet_list(document.styleSheets);
-
-	head.insertBefore(html5_stylesheet, head[firstChild]);
+	parse_style_sheet_list(document.styleSheets, 'all');
 }
 
 function on_after_print () {
-	var a = -1;
+	var a = -1,
+		b;
 
 	while (++a < elementsCache.length) {
 		elementsCache[a][1].parentNode.replaceChild(elementsCache[a][0], elementsCache[a][1]);
 	}
 
-	documentElement[firstChild].removeChild(html5_stylesheet);
+	for (b in html5_stylesheet) {
+		documentElement[firstChild].removeChild(html5_stylesheet[b]);
+	}
 
+	html5_stylesheet = {};
 	elementsCache = [];
 }
 
