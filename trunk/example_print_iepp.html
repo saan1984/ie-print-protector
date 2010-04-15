@@ -32,6 +32,25 @@ mark {
 	padding: 0.1em;
 }
 
+var {
+	font-style: normal;
+	font-weight: bold;
+}
+
+@media screen {
+	section
+	article#foo {
+		margin-left: 100px;
+	}
+}
+
+@media print {
+	section
+	article#bar {
+		margin-left: 100px;
+	}
+}
+
 	</style>
 
 	<style type="text/css" media="screen">
@@ -54,7 +73,7 @@ mark {
 
 	</style>
 
-	<script src="javascript/iepp.1-4-0.js"></script>
+	<script src="javascript/iepp.1-5-0.js"></script>
 	<script>
 
 /* Cross Browser Add Event Shortcut */
@@ -120,20 +139,20 @@ window.onload = function () {
 </article>
 
 <section>
-	<article>
+	<article id="foo">
 		<p>
-			This article is inside a section and uses <var>time</var> to display <time datetime="1776-07-04">July 4th, 1776</time>.
+			This <var>article</var> is inside a <var>section</var>, uses <var>time</var> to display <time datetime="1776-07-04">July 4th, 1776</time>, and has an indent on screen, but not on print.
 		</p>
 	</article>
 
 	<article>
 		<p>
-			This article is also inside a section and <mark>has marking</mark>.
+			This <var>article</var> is also inside a <var>section</var> and <mark>has marking</mark>.
 		</p>
 
-		<article>
+		<article id="bar">
 			<p>
-				This article is inside an article inside a section.
+				This <var>article</var> is inside an <var>article</var> inside a <var>section</var> and has an indent on print, but not on screen.
 			</p>
 		</article>
 	</article>
