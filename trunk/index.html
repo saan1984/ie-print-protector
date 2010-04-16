@@ -66,13 +66,31 @@
 						<h1>
 							IE Print Protector
 						</h1>
-
 						<p>
 							<strong>IE Print Protector</strong> is a piece of javascript that allows you to print HTML5 pages in Internet Explorer.
 						</p>
-
 						<p>
 							<strong>IE Print Protector</strong> helps <abbr title="Internet Explorer">IE</abbr> render HTML5 elements correctly, both on screen and in print.
+						</p>
+
+						<h2>
+							News
+						</h2>
+						<p>
+							Great news, everyone; <a href="http://twitter.com/rem">Remy Sharp</a>'s <a href="http://code.google.com/p/html5shiv/" rel="external"><strong>html5shiv</strong></a> now includes <strong>IE Print Protector</strong>!
+							Remy's script is considered, by most, to be the de facto script for enabling HTML5 elements in Internet Explorer.
+							Remy is the creator of <a href="http://jqueryfordesigners.com/" rel="external">jQuery for Designers</a> and co-author of the upcoming book <a href="http://introducinghtml5.com/" rel="external"><em>Introducing HTML5</em></a>.
+							By including <strong>IE Print Protector</strong> in such a popular and often hotlinked script, we'll see many more developers safely moving their projects, products, and clients into the world of HTML5.
+						</p>
+						<p>
+							Great news, everyone; <a href="http://twitter.com/liferay">Liferay</a>'s <a href="http://alloyaliferay.com/" rel="external"><strong>AlloyUI</strong></a> (and by proxy <a href="http://www.liferay.com/products/liferay-portal" rel="external"><strong>Liferay Portal</strong></a>) now include <strong>IE Print Protector</strong>!
+							Liferay Portal is an open source web platform used by enterprises around the world to create custom business solutions.
+							It powers major websites like <a href="http://developer.cisco.com/" rel="external">the Cisco Developer Network</a>, <a href="http://www.monsterenergy.com/">Monster Energy Drink</a>, and <a href="http://www.sesamestreet.org/" rel="external">Sesame Street</a>.
+							By leveraging HTML5 and <strong>IE Print Protector</strong> in their product, we'll see rapid adoption of HTML5 in the often lagging enterprise market.
+						</p>
+						<p>
+							Have a website using IE Print Protector?
+							<a href="http://twitter.com/?status=@jon_neal" rel="external">Tell me about it on twitter</a>!
 						</p>
 					</article>
 
@@ -182,88 +200,90 @@
 						<p>
 							<small>IE Print Protector is licensed <a href="http://www.opensource.org/licenses/mit-license.php">MIT</a> for your comfort. =)</small>
 						</p>
-						<article style="font: 70% monospace;">
+						<article>
 							<h2>
 								Changelog
 							</h2>
-							<dl>
-								<dt>
-									v1.5.1
-								</dt>
-								<dd>
-									Fixed an issue with IE Print Protector honoring media types on link and style
-								</dd>
-							</dl>
-							<dl>
-								<dt>
-									v1.5.0
-								</dt>
-								<dd>
-									Optimized variables and functions
-								</dd>
-								<dd>
-									Rewrote stylesheet parser to support @media
-								</dd>
-								<dd>
-									Added about info to top of files
-								</dd>
-							</dl>
-							<dl>
-								<dt>
-									v1.4.0
-								</dt>
-								<dd>
-									Removed unnecessary global variable
-								</dd>
-								<dd>
-									Updated list of HTML5 elements
-								</dd>
-								<dd>
-									Rewrote stylesheet parser
-								</dd>
-								<dd>
-									Moved shim out of independant function
-								</dd>
-								<dd>
-									Merged add/removeSafeHTML & add/removeSafeCSS as on_before/after_print
-								</dd>
-							</dl>
-							<dl>
-								<dt>
-									v1.3.1
-								</dt>
-								<dd>
-									Updated list of HTML5 elements
-								</dd>
-							</dl>
-							<dl>
-								<dt>
-									v1.3.0
-								</dt>
-								<dd>
-									Moved individual conditional statements to wrap over entire script
-								</dd>
-								<dd>
-									Optimized window and document variables
-								</dd>
-							</dl>
-							<dl>
-								<dt>
-									v1.2.0
-								</dt>
-								<dd>
-									Merged Block and Inline element lists
-								</dd>
-								<dd>
-									Removed rendered style capturing, stylesheets now parsed
-								</dd>
-								<dd>
-									Renamed "shiv" to "shim"
-								</dd>
-								<dd>
-									onbeforeprint and onafterprint events now attached
-								</dd>
-							</dl>
+							<div style="font: 70% monospace; background: #FFF; border: 2px solid #CCC; padding: 1em 2em;">
+								<dl>
+									<dt>
+										v1.5.1
+									</dt>
+									<dd>
+										Fixed an issue with IE Print Protector honoring media types on link and style
+									</dd>
+								</dl>
+								<dl>
+									<dt>
+										v1.5.0
+									</dt>
+									<dd>
+										Optimized variables and functions
+									</dd>
+									<dd>
+										Rewrote stylesheet parser to support @media
+									</dd>
+									<dd>
+										Added about info to top of files
+									</dd>
+								</dl>
+								<dl>
+									<dt>
+										v1.4.0
+									</dt>
+									<dd>
+										Removed unnecessary global variable
+									</dd>
+									<dd>
+										Updated list of HTML5 elements
+									</dd>
+									<dd>
+										Rewrote stylesheet parser
+									</dd>
+									<dd>
+										Moved shim out of independant function
+									</dd>
+									<dd>
+										Merged add/removeSafeHTML & add/removeSafeCSS as on_before/after_print
+									</dd>
+								</dl>
+								<dl>
+									<dt>
+										v1.3.1
+									</dt>
+									<dd>
+										Updated list of HTML5 elements
+									</dd>
+								</dl>
+								<dl>
+									<dt>
+										v1.3.0
+									</dt>
+									<dd>
+										Moved individual conditional statements to wrap over entire script
+									</dd>
+									<dd>
+										Optimized window and document variables
+									</dd>
+								</dl>
+								<dl>
+									<dt>
+										v1.2.0
+									</dt>
+									<dd>
+										Merged Block and Inline element lists
+									</dd>
+									<dd>
+										Removed rendered style capturing, stylesheets now parsed
+									</dd>
+									<dd>
+										Renamed "shiv" to "shim"
+									</dd>
+									<dd>
+										onbeforeprint and onafterprint events now attached
+									</dd>
+								</dl>
+							</div>
 						</article>
 					</article>
 				</div>
