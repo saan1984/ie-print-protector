@@ -1,10 +1,11 @@
-// iepp v1.6 MIT @jon_neal
+// iepp v1.6.1 MIT @jon_neal
 (function(win, doc){
 	var html5_elements = 'abbr|article|aside|audio|canvas|details|figcaption|figure|footer|header|hgroup|mark|meter|nav|output|progress|section|summary|time|video',
 		html5_elements_array = html5_elements.split('|'),
 		html5_elements_array_length = html5_elements_array.length,
 		html5_elements_replace = new RegExp('<(\/*)('+html5_elements+')', 'gi'),
-		html5_selector_replace = new RegExp('\\b('+html5_elements+')\\b(?!.*[;}])', 'gi'),
+		html5_selector_match = new RegExp('(^|[^\\n]*?\\s)('+html5_elements+')([^\\n]*)({[\\n\\w\\W]*?})', 'gi'),
+		html5_selector_replace = new RegExp('(^|\\s)('+html5_elements+')', 'gi'),
 		doc_fragment = doc.createDocumentFragment(),
 		html = doc.documentElement,
 		head = html.firstChild,
@@ -34,7 +35,10 @@
 	win.attachEvent(
 		'onbeforeprint',
 		function() {
-			var html5_elements_array_count = -1;
+			var html5_elements_array_count = -1,
+				html5_selector_matches,
+				html5_selector_matches_array = [],
+				style_sheet_cssText;
 			while (++html5_elements_array_count < html5_elements_array_length) {
 				var html5_elements_nodeList = doc.getElementsByTagName(html5_elements_array[html5_elements_array_count]),
 					html5_elements_nodeList_length = html5_elements_nodeList.length,
@@ -42,8 +46,14 @@
 				while (++html5_elements_nodeList_count < html5_elements_nodeList_length)
 					if (html5_elements_nodeList[html5_elements_nodeList_count].className.indexOf('iepp_') < 0) html5_elements_nodeList[html5_elements_nodeList_count].className += ' iepp_'+html5_elements_array[html5_elements_array_count];
 			}
+			style_sheet_cssText = parse_style_sheet_list(doc.styleSheets, 'all');
+			while ((html5_selector_matches = html5_selector_match.exec(style_sheet_cssText)) != null)
+				html5_selector_matches_array.push(
+					(html5_selector_matches[1]+html5_selector_matches[2]+html5_selector_matches[3]).replace(html5_selector_replace, '$1.iepp_$2')
+					+html5_selector_matches[4]
+				);
 			head.insertBefore(style, head.firstChild);
-			style.styleSheet.cssText = parse_style_sheet_list(doc.styleSheets, 'all').replace(html5_selector_replace, '.iepp_$1');
+			style.styleSheet.cssText = html5_selector_matches_array.join('\n');
 			doc_fragment.appendChild(doc.body);
 			html.appendChild(body);
 			body.innerHTML = doc_fragment.firstChild.innerHTML.replace(html5_elements_replace, '<$1bdo');
