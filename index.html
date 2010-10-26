@@ -183,13 +183,13 @@
 						</h1>
 						<dl>
 							<dt>
-								IE Print Protector v1.6.1
+								IE Print Protector v1.6.2
 							</dt>
 							<dd>
-								<a href="javascript/iepp.1-6-1.min.js">Minified JS <small>(1.26KB) (736 bytes gzipped)</small></a>
+								<a href="javascript/iepp.1-6-2.min.js">Minified JS <small>(1.29KB) (736 bytes gzipped)</small></a>
 							</dd>
 							<dd>
-								<a href="javascript/iepp.1-6-1.js">Uncompressed JS <small>(3.24KB)</small></a>
+								<a href="javascript/iepp.1-6-2.js">Uncompressed JS <small>(2.91KB)</small></a>
 							</dd>
 						</dl>
 						<p>
@@ -206,6 +206,20 @@
 								Changelog
 							</h2>
 							<div style="font: 70% monospace; background: #FFF; border: 2px solid #CCC; padding: 1em 2em;">
+								<dl>
+									<dt>
+										v1.6.2
+									</dt>
+									<dd>
+										Stylesheet reading should be even faster now. (no screen media type reading + a faster array push)
+									</dd>
+									<dd>
+										Switched replace element to &lt;font&gt; (IE safe but not in the HTML5 spec = less conflicts, right?)
+									</dd>
+									<dd>
+										Much cleaner uncompressed code (now with comments!)
+									</dd>
+								</dl>
 								<dl>
 									<dt>
 										v1.6.1
